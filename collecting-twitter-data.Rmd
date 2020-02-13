@@ -232,8 +232,10 @@ In addition to supporting search strings in the way that TAGS does, rtweet also 
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
+if (!(require(knitr))) {
+  install.packages("knitr")
+}
 if (!(require(rtweet))) {
   install.packages("rtweet")
 }
@@ -247,11 +249,13 @@ if (!(require(tidyr))) {
   install.packages("tidyr")
 }
 
+library(knitr)
 library(rtweet)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
 
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## A few examples of data collection using rtweet

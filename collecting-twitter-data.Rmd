@@ -1,7 +1,7 @@
 ---
 title: "Collecting Twitter Data for Research"
 author: "Francesca Giannetti"
-date: "2/11/2020"
+date: "09/29/2020"
 output:
   html_document:
     df_print: paged
@@ -14,43 +14,43 @@ This workshop presents a few of the best and most approachable tools for collect
 
 ## Prerequisites
 
-For this workshop, you'll need a Google account (Gmail or Scarletmail) and a Twitter account. You may as well create and/or log into both now.
+For this workshop, you'll need a Google account (Gmail or Scarletmail) and a Twitter account. Freate and/or log into both now.
 
 - [Google](https://accounts.google.com/servicelogin)
 - [Twitter](https://twitter.com/signup)
 
 The hands-on portion of this workshop uses [Martin Hawksey's TAGS](https://tags.hawksey.info/), which is a Google Sheets add-on, and [Michael Kearney's rtweet](https://rtweet.info/index.html), an R package, for interacting with Twitter's APIs. Both are widely used in research, as you can tell by searching for references in Google Scholar.[^fn1] We'll discuss briefly the strengths and limitations of each tool.
 
-## The bias in your data
+## Characteristics of Twitter Data
 
 It is often held that social media data provide critical and unique insights into human behavior. And social media platforms offer a relatively economical, quick, and targeted way of collecting data, especially as compared to some other sources, e.g. polls, surveys, demographic and economic data. And yet each social media platform presents with structural biases that are important to consider.[^fn2] 
 
-Twitter data have limitations pertaining to representativeness. From the Pew Research Center's most recent [Social Media Update](https://www.pewresearch.org/fact-tank/2019/04/10/share-of-u-s-adults-using-social-media-including-facebook-is-mostly-unchanged-since-2018/):
+Twitter data have limitations pertaining to representativeness. From the Pew Research Center's most recent [Social Media Fact Sheet](https://www.pewresearch.org/internet/fact-sheet/social-media/):
 
-- Just under a fourth of Americans use Twitter.
-- Younger Americans are more likely than older Americans to be on Twitter.
+- Just over a fifth of Americans use Twitter.
+- Younger Americans are much more likely than older Americans to be on Twitter.
 - Almost a third of Twitter users in the U.S. are college educated and middle- or upper-middle class.
 - Roughly equivalent percentages of Twitter users are Hispanic (25%), Black (24%), and white (21%). Compare this to Pinterest (mostly white), for example. 
 - Twitter users are more likely to live in urban (26%) or suburban (22%) areas than rural (13%) ones. 
 
-Additionally, Twitter is not as global as is often thought. The top ten countries by user count are as follows (as of October 2019). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
+Additionally, Twitter is not as global as is often thought. The top ten countries by user count are as follows (as of July 2020). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
 
 | country | users (in millions) |
 |----------------|---------------------|
-| United States | 48.35 |
-| Japan | 35.65 |
-| Russia | 13.9 |
-| United Kingdom | 13.7 |
-| Saudi Arabia | 10.09 |
-| Turkey | 8.33 |
-| Brazil | 8.15 |
-| India | 7.91 |
-| Mexico | 6.93 |
-| Spain | 6.55 |
+| United States | 62.55 |
+| Japan | 49.1 |
+| India | 17 |
+| Brazil | 15.7 |
+| United Kingdom | 15.25 |
+| Turkey | 12.7 |
+| Saudi Arabia | 12 |
+| Indonesia | 11.2 |
+| Mexico | 10.4 |
+| Philipines | 7.75 |
 
 Source: [Statista](https://www-statista-com.proxy.libraries.rutgers.edu/statistics/242606/number-of-active-twitter-users-in-selected-countries/)
 
-Furthermore, the Twitter REST API, which both TAGS and rtweet query, has important limitations to take into account. For starters, one cannot use it to retrieve tweets that are older than 6-9 days. Consider also the [rate limits](https://developer.twitter.com/en/docs/basics/rate-limiting) that Twitter imposes on all of its APIs, which put a cap on how many times you can query the API in a given time window. Both TAGS and rtweet offer ways of managing this issue for you. But if the phenomenon you hope to investigate is large (i.e. relatively high numbers of tweets per minute), the rate limiting will slow down your data collection. Furthermore, none of the Twitter APIs support the creation of complete collections of tweets, and instead use a complex formula to arrive at a representative sample of tweets. 
+Furthermore, the Twitter REST API, which both TAGS and rtweet query, has important limitations to take into account. For starters, one cannot use it to retrieve tweets that are older than 6-9 days, at least not without a premium (paid) account. Consider also the [rate limits](https://developer.twitter.com/en/docs/basics/rate-limiting) that Twitter imposes on all of its APIs, which put a cap on how many times you can query the API in a given time window. Both TAGS and rtweet offer ways of managing this issue for you. But if the phenomenon you hope to investigate is large (i.e. relatively high numbers of tweets per minute), the rate limiting will slow down your data collection. Furthermore, none of the Twitter APIs support the creation of complete collections of tweets, and instead use a complex formula to arrive at a representative sample of tweets. 
 
 These limitations are important to keep in mind as you frame your research question. For instance, we probably can't make generalizations about the population as a whole based on Twitter data. We can however measure short-term effects, and look for insights relating to the variables we've identified as being implicated in our research question. As a purely practical tip, it may make sense to investigate larger topics that generate lots of activity, rather than smaller topics where the resulting dataset may be a less faithful representation of the subject or phenomenon we want to investigate.
 
@@ -170,7 +170,7 @@ Let’s break down each of the above names and their corresponding values:
 
 `user`: The user who posted the tweet. 
 
-`place`: Place is not always present. It is important to note the distinction between "place" and "coordinates". Place indicates that a tweet is associated with a place, but does not necessarily originate from a place. Coordinates represent the geographic location reported by the user or application. To learn more, check out the ninth tutorial in this series. 
+`place`: Place is not always present. It is important to note the distinction between "place" and "coordinates". Place indicates that a tweet is associated with a place, but does not necessarily originate from a place. Coordinates represent the geographic location reported by the user or application.
 
 `entities`: Additional metadata that provides contextual information about a Tweet like links, hashtags, and attached media
 
@@ -184,45 +184,49 @@ Clicking on the TAGS v6.1 button will take you to a Google Drive window in which
 
 ![make a copy][1]
 
-[1]: imgs/tags1_tn.png
+[1]: imgs/tags1.png { height=150px }
 
 In the navigation menu at the top of your screen, you should see a TAGS button. Go to **TAGS > Setup Twitter Access**. You'll be guided through a series of steps that will grant the TAGS tool access to your Drive and to your Twitter account. ***Nota bene***: be sure to enable pop-ups in your browser! In the pop-up window for granting access to Twitter, choose the **Easy Setup** button. 
+
+![easy setup][2]
+
+[2]: imgs/tags2.png { height=150px }
 
 ## Creating your Twitter archive
 
 Now that those preliminaries are out of the way, we can concentrate on retrieving our Twitter data. Enter your search string in the box next to **Enter term** of the TAGS instructions. 
 
-![enter term][2]
+![enter term][3]
 
-[2]: imgs/tags6_tn.png
+[3]: imgs/tags3.png { height=150px }
 
 Then go to **TAGS > Run now!** After allowing for the script to run for a moment or two, click over to the Archive tab of your spreadsheet. Do you see your tweets? Have a look at the header row of your Archive tab. It should remind you of the Twitter JSON output we looked at earlier. Hawksey has mostly reused the Twitter field names, but not all of them are included in the default installation of the tool. If you are keen on adding some more, like retweet\_count and favorite\_count, this is what to do. Take a big breath, go to **TAGS > Wipe Archive Sheet**, and delete all those tweets you just collected. Then, go to the far right side of the spreadsheet and add a new column after the field entities\_str. In the header row, add the fields you want. [This is the list](https://tags.hawksey.info/news/list-of-tags-column-names-that-can-be-included-in-archive-sheet/) of what is available to add. I might suggest adding a column header with retweet\_count, and a second with favorite\_count.[^fn5] Then, go to **TAGS > Run now!**, and repopulate your spreadsheet. Scroll over to the right again. Did it capture your added Twitter fields? Excellent. You may also go to **TAGS > Update archive every hour** to keep collecting tweets automatically. The TAGS tool will continue issuing hourly calls to the Twitter REST API without you even needing to be logged into Google. To stop, just go to **TAGS > Stop updating archive every hour**.
 
 ## Exploring and filtering data
 
-Go to **TAGS > Add Summary Sheet** and **TAGS > Add Dashboard Sheet**. Two new tabs should appear in your Google spreadsheet, with some interesting data about your archive, like Top Tweeters, Tweets with the most RTs (retweets), and time plots of Twitter activity. What can these views tell you about your data? Hawksey has created two interface tools to interact with the Twitter data you collect: TAGSExplorer and TAGS Archive. You can click on them from either your Summary or Dashboard tab. ***Note***: You need to make your spreadsheet public on the web in order for this to work.
+Go to **TAGS > Add Summary Sheet** and **TAGS > Add Dashboard Sheet**. Two new tabs should appear in your Google spreadsheet, with some interesting data about your archive, like Top Tweeters, Tweets with the most RTs (retweets), and time plots of Twitter activity. What can these views tell you about your data? Hawksey has created two interface tools to interact with the Twitter data you collect: TAGSExplorer and TAGS Archive. You can click on them from either your Summary or Dashboard tab. ***Note***: You need to make your spreadsheet public on the web in order for this to work. Go to **File > Publish to the web**.
 
-![TAGSExplorer and TAGS Archive][3]
+![TAGSExplorer and TAGS Archive][4]
 
-[3]: imgs/tags7_tn.png
+[4]: imgs/tags4.png { height=150px }
 
 Each dot (also called a node) represents a Twitter user. The dot is sized by the number of connections (also called edges) it has with the other users in this dataset. So, the larger the node, the more edges it has (i.e. more tweets, mentions, replies). You can click on any node to get a window with the detail of those connections. TAGSExplorer will load only direct replies as the connections at first. But notice in the lower right-hand corner how you can add mentions and retweets as edges as well? 
 
-![edges][4]
+![edges][5]
 
-[4]: imgs/tags8_tn.png
+[5]: imgs/tags5.png { height=150px }
 
 The edges will be differentiated by the type of line, e.g. solid gray for replies, dotted gray for mentions, and dotted blue for retweets. Either way, if you load the mentions and retweets as edges or not, you will probably encounter what is known in network analysis as the hairball problem. There are many tools and techniques for grooming the hairball, but for right now, you might as well appreciate the awesome unruliness of your data. Can you make any sense of it? Who are the major actors in your Twitter network? Take time also to explore the Top Tweeters, Top Hashtags, and Top Conversationalists in your TAGSExplorer page. What can these basic visualizations tell you about your dataset? 
 
-![top n][5]
+![top n][6]
 
-[5]: imgs/tags9_tn.png
+[6]: imgs/tags6.png { width=150px }
 
 If you want an easy way of drilling down to the level of individual tweets, you might be aided by the TAGS Archive interface, which will allow you to retrieve tweets from your data set by searching for any combination of user names, hashtags or phrases. What phenomenon observed in the TAGSExplorer interface might prompt you to look at individual tweets? 
 
-![TAGS Archive][6]
+![TAGS Archive][7]
 
-[6]: imgs/tags10_tn.png
+[7]: imgs/tags7.png { height=150px }
 
 ## rtweet
 
@@ -232,10 +236,10 @@ In addition to supporting search strings in the way that TAGS does, rtweet also 
 
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 
-if (!(require(knitr))) {
-  install.packages("knitr")
-}
+## installing rtweet and some other packages that will help us sort and visualize the data
+
 if (!(require(rtweet))) {
   install.packages("rtweet")
 }
@@ -249,37 +253,44 @@ if (!(require(tidyr))) {
   install.packages("tidyr")
 }
 
-library(knitr)
 library(rtweet)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## Create a Twitter App
+
+On RStudio Cloud, there is an extra step to get rtweet up and running (you won't need to do this if your are using RStudio desktop). Go to the file called `twitterapp.rds` in your Files. Follow the instructions to create a Twitter Developer App at <https://web.archive.org/web/20200510175109/https://rtweet.info/articles/auth.html>. Edit the rds file to include the name of your App and your key and token. The Rds file stores a single R object that we will read into our environment with the following line of code. 
+
+```{r eval=FALSE}
+
+## edit twitterapp.rds to include your Twitter app details and run this line of code
+token <- readRDS("twitterapp.rds")
+```
+
 
 ## A few examples of data collection using rtweet
 
-To learn about the `search_tweets` function and the arguments it takes, enter `?search_tweets()` at the R console. For help with the full rtweet package, type `help(package="rtweet")` at the console or visit the intro vignette at <https://rtweet.info/articles/intro.html>. 
+To learn about the `search_tweets` function and the arguments it takes, enter `?search_tweets()` at the R console. For help with the full rtweet package, type `help(package="rtweet")` at the console or visit the intro vignette at <https://web.archive.org/web/20200515224405/https://rtweet.info/articles/intro.html>. 
 
-*Note*: the first time you run one of these fuctions, an authentication process will launch in a broswer window asking for you to connect your Twitter account to Kearney's Twitter Developer keys. This is similar to what we did earlier with TAGS. 
+*Note*: The preceding step is critial on rstudio.cloud, or else the subsequent code blocks won't run. If you happen to be on RStudio desktop, you can dispense with the preceding code block, as the first time you run one of these functions, an authentication process will launch in a broswer window asking for you to connect your Twitter account to Kearney's Twitter Developer keys. This is similar to what we did earlier with TAGS. 
 
 ```{r}
 
-# a hashtag search
-library_tweets <- search_tweets(
-  "#fundlibraries", n = 18000, include_rts = TRUE
-)
+# get most recent 1000 tweets posted by Biden's account 
+joe_tml <- get_timeline("JoeBiden", n = 1000)
 
 ## search by lat-lon pair
 ## you can look this up at https://www.latlong.net/
-alexander_tweets <- search_tweets(
-  geocode = "40.5045521,-74.4527554,5mi", include_rts = FALSE
+oldqueens_tweets <- search_tweets(
+  geocode = "40.4987461,-74.4484437,5mi", include_rts = FALSE
 )
 
 ## search using multiple queries
-redlining <- search_tweets2(
-  c("\"american slavery\"", "redlining OR discrimination"), 
+pandemic_tweets <- search_tweets2(
+  c("\"pandemic university\"", "#covidcampus OR #covidcollege"), 
   n = 500
 )
 
@@ -289,20 +300,20 @@ redlining <- search_tweets2(
 
 rtweet allows you to quickly visualize frequency of tweets over time with the `ts_plot()` function. Enter `?ts_plot()` at the console for more examples with this function.
 
-```{r library_tweets, echo=FALSE}
+```{r joe_tml, echo=FALSE}
 
-## a time series plot of library_tweets with tweets aggregated by the hour
-library_tweets %>% 
+## a time series plot of Biden's tweets aggregated by the week
+joe_tml %>% 
   dplyr::group_by(is_retweet) %>% 
-  ts_plot("hours")
+  ts_plot("weeks")
 ```
 
-```{r redlining_plot, echo=FALSE}
+```{r pandemic_tweets, echo=FALSE}
 
-ts_plot(redlining, "3 hours") +
+ts_plot(pandemic_tweets, "3 hours") +
   ggplot2::theme_bw() +
   ggplot2::labs(x="", y="", 
-                title = "Frequency of tweets about American slavery, redlining, or discrimination",
+                title = "Frequency of tweets about COVID19 and higher education",
                 subtitle = "Tweet counts aggregated using three-hour intervals")
 ```
 
@@ -323,13 +334,13 @@ my_archive <- search_tweets(
 
 The subject of manipulation and analysis will be addressed in the second part of this workshop. But to leave you with a taste, this code block counts the hashtag entities present in the `library_tweets` object and sorts them in descending order by frequency, and visualizes the top ten as a bar graph. 
 
-```{r library_hashtags, echo=TRUE}
+```{r pandemic_hashtags, echo=TRUE}
 
-select(library_tweets, hashtags) %>% 
+select(pandemic_tweets, hashtags) %>% 
   unnest(cols = c(hashtags)) %>% 
   mutate(hashtags = tolower(hashtags)) %>% 
   count(hashtags, sort=TRUE) %>% 
-  filter(hashtags != "fundlibraries") %>% 
+  filter(hashtags != "NA") %>% 
   top_n(10) %>% 
   ggplot(aes(x=reorder(hashtags, n), y=n)) + 
   geom_bar(stat="identity") + coord_flip()
@@ -339,14 +350,10 @@ select(library_tweets, hashtags) %>%
 
 Twitter requires that you adhere to its [developer policy](https://developer.twitter.com/en/developer-terms/agreement-and-policy.html), which covers a range of technical matters, as well as its [terms](https://developer.twitter.com/en/developer-terms/more-on-restricted-use-cases), which address ethical considerations, in order for you to use its APIs. Examine both documents carefully if you intend to use Twitter data for research purposes. The most salient point from the policy: downloadable datasets of over 50,000 tweets should include Tweet IDs and/or User IDs only.
 
-## Feedback
-
-Finally, I'd appreciate it if you could fill out our brief feedback survey: <http://bit.ly/s20_dh_feedback>. Thanks for coming!
-
 
 ## Some of my favorite R learning resources
 
-Arnold, T. and L. Tilton, "Set-Up" and "A Short Introduction to R," *[Humanities Data in R](https://catalog.libraries.rutgers.edu/vufind/catalog_search.php?record=5482506)* (Springer, 2015).
+Arnold, T. and L. Tilton, "Set-Up" and "A Short Introduction to R," *[Humanities Data in R](https://bit.ly/2S8yAJJ)* (Springer, 2015).
 
 Bryan, J. et al. "Stat 545." <https://stat545.com/index.html>
 

@@ -234,7 +234,7 @@ The TAGS tool is among the easiest applications for collecting Twitter data, in 
 
 In addition to supporting search strings in the way that TAGS does, rtweet also allows us to search by latitude and longitude coordinates.[^fn6] And it includes some nice functions that allow us to inspect and visualize tweets, in addition to collecting them. If you are already familiar with programming in the R language, rtweet will help you to keep your workflow all in one place. 
 
-To keep things simple, we will used RStudio Cloud to run the next few examples interactively. Go to <https://rstudio.cloud> and create an account. Then, click the dropdown arrow next to the **New Project** button and select *New Project from Git Repository*. Enter the following URL to create a project based on this handout: <https://github.com/giannetti/collecting-twitter-data>. While still in RStudio Cloud, scroll down to this section, then press the little green arrow in the upper right corner of the code block below to run the set-up. 
+To keep things simple, we will used RStudio Cloud to run the next few examples interactively. Go to <https://rstudio.cloud> and create an account. Then, click the dropdown arrow next to the **New Project** button and select *New Project from Git Repository*. Enter the following URL to create a project based on this handout: <https://github.com/giannetti/collecting-twitter-data>. Open the file called `collecting-twitter-data.Rmd`. In the script editor pane of RStudio Cloud (upper left), scroll down to this section, then press the little green arrow in the upper right corner of the code block below to run the set-up. 
 
 
 ```{r setup, include=FALSE}
@@ -269,7 +269,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Create a Twitter App
 
-On [RStudio Cloud](https://rstudio.cloud/), there is an extra step to get rtweet up and running (you won't need to do this if your are using RStudio desktop). Go to the file called `twitterapp.rds` in your Files. Follow the instructions to create a Twitter Developer App at <https://web.archive.org/web/20200510175109/https://rtweet.info/articles/auth.html>. Edit the rds file to include the name of your App and your key and token. The Rds file stores a single R object that we will read into our environment with the following line of code. 
+On [RStudio Cloud](https://rstudio.cloud/), there is an extra step to get rtweet up and running (you won't need to do this if your are using RStudio desktop). Follow the instructions to create a Twitter Developer App at <https://web.archive.org/web/20200510175109/https://rtweet.info/articles/auth.html>. Ccopy the name of your App and your key and token into their respective fields below. We will use the `saveRDS()` function to store our app credentials as an R object to reaccess as needed. 
 
 ```{r eval=FALSE}
 
@@ -297,7 +297,7 @@ saveRDS(token, "twitter_token.rds")
 
 To learn about the `search_tweets` function and the arguments it takes, enter `?search_tweets()` at the R console. For help with the full rtweet package, type `help(package="rtweet")` at the console or visit the intro vignette at <https://web.archive.org/web/20200515224405/https://rtweet.info/articles/intro.html>. 
 
-*Note*: The preceding step is critial on rstudio.cloud, or else the subsequent code blocks won't run. If you happen to be on RStudio desktop, you can dispense with the preceding code block, as the first time you run one of these functions, an authentication process will launch in a broswer window asking for you to connect your Twitter account to Kearney's Twitter Developer keys. This is similar to what we did earlier with TAGS. 
+*Note*: The preceding step is critial on rstudio.cloud, or else the subsequent code blocks won't run. If you happen to be on RStudio desktop, you can dispense with the preceding code block and remove the `token = token` instruction, as the first time you run one of these functions, an authentication process will launch in a broswer window asking for you to connect your Twitter account to Kearney's Twitter Developer keys. This is similar to what we did earlier with TAGS. 
 
 ```{r}
 

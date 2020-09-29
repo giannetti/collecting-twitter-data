@@ -3,9 +3,9 @@ title: "Collecting Twitter Data for Research"
 author: "Francesca Giannetti"
 date: "09/29/2020"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
-  pdf_document: default
 ---
 
 ## About
@@ -254,7 +254,7 @@ if (!(require(tidyr))) {
   install.packages("tidyr")
 }
 if (!(require(knitr))) {
-  install.packages("kniter")
+  install.packages("knitr")
 }
 
 library(rtweet)
@@ -273,7 +273,7 @@ On [RStudio Cloud](https://rstudio.cloud/), there is an extra step to get rtweet
 
 ```{r eval=FALSE}
 
-## enter the details of your Twitter app and run this line of code
+## Enter the details of your Twitter app and run this line of code. Be sure to remove the space character!
 
 appname <- " " # whatever you called your app
 api_key <- " " 
@@ -300,6 +300,9 @@ To learn about the `search_tweets` function and the arguments it takes, enter `?
 *Note*: The preceding step is critial on rstudio.cloud, or else the subsequent code blocks won't run. If you happen to be on RStudio desktop, you can dispense with the preceding code block, as the first time you run one of these functions, an authentication process will launch in a broswer window asking for you to connect your Twitter account to Kearney's Twitter Developer keys. This is similar to what we did earlier with TAGS. 
 
 ```{r}
+
+# depending on your session, you may need to read your key and token back into memory
+token <- readRDS("twitter_token.rds")
 
 # get most recent 1000 tweets posted by Biden's account 
 joe_tml <- get_timeline("JoeBiden", n = 1000, token = token)

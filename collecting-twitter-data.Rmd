@@ -238,7 +238,6 @@ To keep things simple, we will used RStudio Cloud to run the next few examples i
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
 
 ## installing rtweet and some other packages that will help us sort and visualize the data
 
@@ -254,11 +253,17 @@ if (!(require(ggplot2))) {
 if (!(require(tidyr))) {
   install.packages("tidyr")
 }
+if (!(require(knitr))) {
+  install.packages("kniter")
+}
 
 library(rtweet)
 library(dplyr)
 library(ggplot2)
 library(tidyr)
+library(knitr)
+
+knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
@@ -268,8 +273,23 @@ On [RStudio Cloud](https://rstudio.cloud/), there is an extra step to get rtweet
 
 ```{r eval=FALSE}
 
-## edit twitterapp.rds to include your Twitter app details and run this line of code
-token <- readRDS("twitterapp.rds")
+## enter the details of your Twitter app and run this line of code
+
+appname <- " " # whatever you called your app
+api_key <- " " 
+api_secret_key <- " "
+access_token <- " "
+access_token_secret <- " "
+
+token <- create_token(
+  app = appname,
+  consumer_key = api_key,
+  consumer_secret = api_secret_key,
+  access_token = access_token,
+  access_secret = access_token_secret)
+
+saveRDS(token, "twitter_token.rds")
+
 ```
 
 
@@ -282,18 +302,18 @@ To learn about the `search_tweets` function and the arguments it takes, enter `?
 ```{r}
 
 # get most recent 1000 tweets posted by Biden's account 
-joe_tml <- get_timeline("JoeBiden", n = 1000)
+joe_tml <- get_timeline("JoeBiden", n = 1000, token = token)
 
 ## search by lat-lon pair
 ## you can look this up at https://www.latlong.net/
 oldqueens_tweets <- search_tweets(
-  geocode = "40.4987461,-74.4484437,5mi", include_rts = FALSE
+  geocode = "40.4987461,-74.4484437,5mi", include_rts = FALSE, token = token
 )
 
 ## search using multiple queries
 pandemic_tweets <- search_tweets2(
   c("\"pandemic university\"", "#covidcampus OR #covidcollege"), 
-  n = 500
+  n = 500, token = token
 )
 
 ```

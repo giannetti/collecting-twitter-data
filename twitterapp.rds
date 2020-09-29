@@ -1,12 +1,8 @@
-## Follow the instructions at <https://web.archive.org/web/20200510175109/https://rtweet.info/articles/auth.html> to create a Twitter Developer app for your rtweet research. Copy the API keys and the name of the App into the values below. 
-
-## store api keys (these are fake example values; replace with your own keys)
 api_key <- "uzUmwuwpCam0kgNJByy58ZwEH"
 api_secret_key <- "wX0rQ4YUK7HVtmhFLYB8OOM7Yr7tODupumzIekDLdGLEJtS3XB"
-access_token <- "9551451262-597825672-S5DrkcbeeoPHNEgf2z37rYgJQ8eTsv6bg90zqhEa"
+access_token <- "597825672-S5DrkcbeeoPHNEgf2z37rYgJQ8eTsv6bg90zqhEa"
 access_token_secret <- "zCv6a6ppTQg0xYeDez1akgai2aSzO5DvffiKhhKNWbCyZ"
 
-## authenticate via web browser
 token <- create_token(
   app = "rtweet-research",
   consumer_key = api_key,

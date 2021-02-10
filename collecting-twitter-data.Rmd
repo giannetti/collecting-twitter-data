@@ -1,11 +1,11 @@
 ---
 title: "Collecting Twitter Data for Research"
 author: "Francesca Giannetti"
-date: "09/29/2020"
+date: "02/20/2021"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
+  pdf_document: default
 ---
 
 ## About
@@ -14,7 +14,7 @@ This workshop presents a few of the best and most approachable tools for collect
 
 ## Prerequisites
 
-For this workshop, you'll need a Google account (Gmail or Scarletmail), a Twitter account, and, time permitting, an RStudio Cloud account. Create and/or log into them now. You can use your Google credentials to set up the free RStudio account.
+For this workshop, you'll need a Google account, a Twitter account, and an RStudio Cloud account. Create and/or log into them now. You can use your Google credentials to set up the free RStudio account.
 
 - [Google](https://accounts.google.com/servicelogin)
 - [Twitter](https://twitter.com/signup)
@@ -34,20 +34,25 @@ Twitter data have limitations pertaining to representativeness. From the Pew Res
 - Roughly equivalent percentages of Twitter users are Hispanic (25%), Black (24%), and white (21%). Compare this to Pinterest (mostly white), for example. 
 - Twitter users are more likely to live in urban (26%) or suburban (22%) areas than rural (13%) ones. 
 
-Additionally, Twitter is not as global as is often thought. The top ten countries by user count are as follows (as of July 2020). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
+Additionally, Twitter is not as global as is often thought. The top fifteen countries by user count are as follows (as of January 2021). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
 
 | country | users (in millions) |
 |----------------|---------------------|
-| United States | 62.55 |
-| Japan | 49.1 |
-| India | 17 |
-| Brazil | 15.7 |
-| United Kingdom | 15.25 |
-| Turkey | 12.7 |
-| Saudi Arabia | 12 |
-| Indonesia | 11.2 |
-| Mexico | 10.4 |
-| Philipines | 7.75 |
+| United States | 69.3 |
+| Japan | 50.9 |
+| India | 17.5 |
+| United Kingdom | 16.45 |
+| Brazil | 16.2 |
+| Indonesia | 14.05 |
+| Turkey | 13.6 |
+| Saudi Arabia | 12.45 |
+| Mexico | 11 |
+| France | 8 |
+| Philippines | 7.85 |
+| Spain | 7.5 |
+| Thailand | 7.35 |
+| Canada | 6.45 |
+| Germany | 5.8 |
 
 Source: [Statista](https://www-statista-com.proxy.libraries.rutgers.edu/statistics/242606/number-of-active-twitter-users-in-selected-countries/)
 
@@ -57,7 +62,17 @@ These limitations are important to keep in mind as you frame your research quest
 
 ## Formulate a Research Question
 
-Let's spend a few minutes elaborating a research idea or question. Try out your search terms at [twitter.com/explore](https://twitter.com/explore) to see how viable your topic is. Your question doesn't have to be detailed or complicated. For example, you could ask if the use of the hashtag \#shitmystudentswrite is unethical... or if is it just good fun. Adding to that topic, are the tweets with the hashtag \#shitacademicssay similar or dissimilar to those with \#shitmystudentswrite? (In other words, do academics say things just as silly as their students?) You can use any combination of hashtags, handles, and free text  you identify that capture your topic, based on these preliminary findings. The tools we will use introduce a few other search possibilities that are inaccessible via the regular web interface, e.g. simple Boolean logic, to/from specific Twitter accounts, and geolocated tweets, so you might also think about what could be done with these added capabilities.
+Let's spend a few minutes elaborating a research idea or question. Try out your search terms at [twitter.com/explore](https://twitter.com/explore) to see how viable your topic is. Your question doesn't have to be detailed or complicated. 
+
+For example, you could ask if the use of the hashtag \#shitmystudentswrite is unethical... or if is it just good fun. Adding to that topic, are the tweets with the hashtag \#shitacademicssay similar or dissimilar to those with \#shitmystudentswrite? (In other words, do academics say things just as silly as their students?) 
+
+Research on fandom communities might include hashtags representing specific television shows, movies, theater, or books.
+
+You could explore sentiment, irony, or common misspellings (why not?), e.g. #happy, #lol, #wow, #winning, #love, #thanks, #smh (shake my head), or the afterlife of covfefe.
+
+You could collect data on the intersections of cats and lawyers on the internet (no reason). 
+
+You can use any combination of hashtags, handles, and free text  you identify that capture your topic, based on these preliminary findings. The tools we will use introduce a few other search possibilities that are inaccessible via the regular web interface, e.g. simple Boolean logic, to/from specific Twitter accounts, and geolocated tweets, so you might also think about what could be done with these added capabilities.
 
 ## Some definitions
 
@@ -181,7 +196,7 @@ Let’s break down each of the above names and their corresponding values:
 
 Let's move now to TAGS. Open your browser of choice and navigate to <https://tags.hawksey.info/>. Click on *Get TAGS*. My recommendation is that we use TAGS 6.1.[^fn4] 
 
-Clicking on the TAGS v6.1 button will take you to a Google Drive window in which you are asked to make a copy of TAGS. Do so. This creates a copy of the TAGS spreadsheet in your Google Drive. Rename it to something descriptive, i.e. My Test Archive. 
+Clicking on the TAGS v6.1 button will take you to a Google Drive window in which you are asked to make a copy of TAGS. Do so. This creates a copy of the TAGS spreadsheet in your Google Drive. Rename it to something descriptive, i.e. Zoom Cat Tweets Archive. 
 
 ![make a copy][1]
 
@@ -274,7 +289,8 @@ On [RStudio Cloud](https://rstudio.cloud/), there is an extra step to get rtweet
 
 ```{r eval=FALSE}
 
-## Enter the details of your Twitter app and run this line of code. Be sure to remove the space character!
+## Enter the details of your Twitter app and run this line of code. 
+## Be sure to remove the space character!
 
 appname <- " " # whatever you called your app
 api_key <- " " 
@@ -316,7 +332,7 @@ oldqueens_tweets <- search_tweets(
 
 ## search using multiple queries
 pandemic_tweets <- search_tweets2(
-  c("\"pandemic university\"", "#covidcampus OR #covidcollege"), 
+  c("\"pandemic university\"", "#covidcampus OR #covidcollege OR #coviduni OR #pandemicU"), 
   n = 500, token = token
 )
 
@@ -375,6 +391,12 @@ select(pandemic_tweets, hashtags) %>%
 ## Twitter developer policy and terms
 
 Twitter requires that you adhere to its [developer policy](https://developer.twitter.com/en/developer-terms/agreement-and-policy.html), which covers a range of technical matters, as well as its [terms](https://developer.twitter.com/en/developer-terms/more-on-restricted-use-cases), which address ethical considerations, in order for you to use its APIs. Examine both documents carefully if you intend to use Twitter data for research purposes. The most salient point from the policy: downloadable datasets of over 50,000 tweets should include Tweet IDs and/or User IDs only.
+
+## Ethical issues in social media research
+
+### AKA just because you can, does it mean you should?
+
+Researchers in all fields have been gathering social media data for years now, but the ethical obligations of working with such data are still something of a gray area. So if the tweets are public, and Twitter's terms of service allow researchers to collect the data, what other considerations are there? For starters, violations of privacy are still in the mix. There's a lack of real informed consent when it comes to posting on social media platforms. Most users don't read the terms and conditions, and many do not realize that researchers can reuse tweets without asking their permission ([Fiesler & Proferes, 2018](https://doi.org/10.1177/2056305118763366)). Furthermore, as the people at DocNow point out, members of marginalized and vulnerable groups run the risk of greater potential harm, especially when posting about their participation in protest, civil disobedience, and, these days, COVID-19 infection status ([Jules et al., 2018](https://news.docnow.io/documenting-the-now-ethics-white-paper-43477929ea3e)). As always, context matters. If you consider the authors of the posts in your social media dataset as human research subjects, who may or may not be subject to the rules of your institution's IRB, what does "do no harm" look like ([Suomela et al., 2019](http://www.digitalstudies.org/articles/10.16995/dscn.302/))? 
 
 
 ## Some of my favorite R learning resources

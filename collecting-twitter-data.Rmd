@@ -1,7 +1,7 @@
 ---
 title: "Collecting Twitter Data for Research"
 author: "Francesca Giannetti"
-date: "02/20/2021"
+date: "02/10/2022"
 output:
   html_document:
     df_print: paged
@@ -20,7 +20,7 @@ For this workshop, you'll need a Google account, a Twitter account, and an RStud
 - [Twitter](https://twitter.com/signup)
 - [RStudio Cloud](https://rstudio.cloud/)
 
-The hands-on portion of this workshop uses [Martin Hawksey's TAGS](https://tags.hawksey.info/), which is a Google Sheets add-on, and [Michael Kearney's rtweet](https://rtweet.info/index.html), an R package, for interacting with Twitter's APIs. Both are widely used in research, as you can tell by searching for references in Google Scholar.[^fn1] We'll discuss briefly the strengths and limitations of each tool.
+The hands-on portion of this workshop uses [Martin Hawksey's TAGS](https://tags.hawksey.info/), which is a Google Sheets add-on, and [Michael Kearney's rtweet](https://web.archive.org/web/20191215173839/http://rtweet.info/index.html), an R package, for interacting with Twitter's APIs. Both are widely used in research, as you can tell by searching for references in Google Scholar.[^fn1] We'll discuss briefly the strengths and limitations of each tool.
 
 ## Characteristics of Twitter Data
 
@@ -30,33 +30,34 @@ Twitter data have limitations pertaining to representativeness. From the Pew Res
 
 - Just over a fifth of Americans use Twitter.
 - Younger Americans are much more likely than older Americans to be on Twitter.
-- Almost a third of Twitter users in the U.S. are college educated and middle- or upper-middle class.
-- Roughly equivalent percentages of Twitter users are Hispanic (25%), Black (24%), and white (21%). Compare this to Pinterest (mostly white), for example. 
-- Twitter users are more likely to live in urban (26%) or suburban (22%) areas than rural (13%) ones. 
+- A third of Twitter users in the U.S. are college educated and middle- or upper-middle class.
+- Roughly equivalent percentages of Twitter users are Hispanic (23%), Black (29%), and white (22%). Compare this to LinkedIn or Nextdoor (mostly white), for example. 
+- Twitter users are more likely to live in urban (27%) or suburban (23%) areas than rural (18%) ones. 
 
-Additionally, Twitter is not as global as is often thought. The top fifteen countries by user count are as follows (as of January 2021). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
+Additionally, Twitter is not as global as is often thought. The top sixteen countries by user count are as follows (as of October 2021). Twitter is blocked in China, although users there may circumvent the block through the use of VPNs. 
 
 | country | users (in millions) |
 |----------------|---------------------|
-| United States | 69.3 |
-| Japan | 50.9 |
-| India | 17.5 |
-| United Kingdom | 16.45 |
-| Brazil | 16.2 |
-| Indonesia | 14.05 |
-| Turkey | 13.6 |
-| Saudi Arabia | 12.45 |
-| Mexico | 11 |
-| France | 8 |
-| Philippines | 7.85 |
-| Spain | 7.5 |
-| Thailand | 7.35 |
-| Canada | 6.45 |
-| Germany | 5.8 |
+| United States | 77.75 |
+| Japan | 58.2 |
+| India | 24.45 |
+| Brazil | 19.05 |
+| United Kingdom | 19.05 |
+| Indonesia | 17.55 |
+| Turkey | 16.25 |
+| Saudi Arabia | 14.2 |
+| Mexico | 14 |
+| Thailand | 11.25 |
+| France | 10.2 |
+| Philippines | 10.2 |
+| Spain | 9.35 |
+| Canada | 8 |
+| Germany | 7.8 |
+| South Korea | 7.2 |
 
 Source: [Statista](https://www-statista-com.proxy.libraries.rutgers.edu/statistics/242606/number-of-active-twitter-users-in-selected-countries/)
 
-Furthermore, the Twitter REST API, which both TAGS and rtweet query, has important limitations to take into account. For starters, one cannot use it to retrieve tweets that are older than 6-9 days, at least not without a premium (paid) account. Consider also the [rate limits](https://developer.twitter.com/en/docs/basics/rate-limiting) that Twitter imposes on all of its APIs, which put a cap on how many times you can query the API in a given time window. Both TAGS and rtweet offer ways of managing this issue for you. But if the phenomenon you hope to investigate is large (i.e. relatively high numbers of tweets per minute), the rate limiting will slow down your data collection. Furthermore, none of the Twitter APIs support the creation of complete collections of tweets, and instead use a complex formula to arrive at a representative sample of tweets. 
+Furthermore, the Twitter REST API, which both TAGS and rtweet query, has important limitations to take into account. For starters, one cannot use it to retrieve tweets that are older than 6-9 days, at least not without an [academic account](https://developer.twitter.com/en/products/twitter-api/academic-research), which requires an application. Consider also the [rate limits](https://developer.twitter.com/en/docs/basics/rate-limiting) that Twitter imposes on all of its APIs, which put a cap on how many times you can query the API in a given time window. Both TAGS and rtweet offer ways of managing this issue for you. But if the phenomenon you hope to investigate is large (i.e. relatively high numbers of tweets per minute), the rate limiting will slow down your data collection. Furthermore, none of the Twitter APIs support the creation of complete collections of tweets, and instead use a complex formula to arrive at a representative sample of tweets. 
 
 These limitations are important to keep in mind as you frame your research question. For instance, we probably can't make generalizations about the population as a whole based on Twitter data. We can however measure short-term effects, and look for insights relating to the variables we've identified as being implicated in our research question. As a purely practical tip, it may make sense to investigate larger topics that generate lots of activity, rather than smaller topics where the resulting dataset may be a less faithful representation of the subject or phenomenon we want to investigate.
 
@@ -70,7 +71,7 @@ Research on fandom communities might include hashtags representing specific tele
 
 You could explore sentiment, irony, or common misspellings (why not?), e.g. #happy, #lol, #wow, #winning, #love, #thanks, #smh (shake my head), or the afterlife of covfefe.
 
-You could collect data on the intersections of cats and lawyers on the internet (no reason). 
+You could collect data on whichever conversation du jour is demonstrating Godwin's law. 
 
 You can use any combination of hashtags, handles, and free text  you identify that capture your topic, based on these preliminary findings. The tools we will use introduce a few other search possibilities that are inaccessible via the regular web interface, e.g. simple Boolean logic, to/from specific Twitter accounts, and geolocated tweets, so you might also think about what could be done with these added capabilities.
 
@@ -80,7 +81,7 @@ You can use any combination of hashtags, handles, and free text  you identify th
 
 Many social media platforms provide access to their platforms in the form of APIs (application programming interfaces). APIs facilitate the work of data collection. APIs have affordances and limitations. They change over time, and sometimes they disappear.
 
-An API is a set of methods for applications to receive requests and send responses. Developers use APIs to build applications using someone else's content. For example, Mark Sample's [Shark Girls](https://www.samplereality.com/2015/09/05/your-mistake-was-a-vital-strategy/) uses an OCEARCH API to tweet the locations of two great white sharks. Web APIs send a structured response in JSON or XML format. Most social media APIs send responses as JSON.
+An API is a set of methods for applications to receive requests and send responses. Developers use APIs to build applications using someone else's content. For example, Mark Sample's [\@WeirdSatellite](https://twitter.com/samplereality/status/1422278302132314120) uses the Google Maps API to grab a static image of a set of random latitude and longitude coordinates. Web APIs send a structured response in JSON or XML format. Most social media APIs send responses as JSON.
 
 *Collecting vs Scraping*
 
@@ -220,7 +221,9 @@ Then go to **TAGS > Run now!** After allowing for the script to run for a moment
 
 ## Exploring and filtering data
 
-Go to **TAGS > Add Summary Sheet** and **TAGS > Add Dashboard Sheet**. Two new tabs should appear in your Google spreadsheet, with some interesting data about your archive, like Top Tweeters, Tweets with the most RTs (retweets), and time plots of Twitter activity. What can these views tell you about your data? Hawksey has created two interface tools to interact with the Twitter data you collect: TAGSExplorer and TAGS Archive. You can click on them from either your Summary or Dashboard tab. ***Note***: You need to make your spreadsheet public on the web in order for this to work. Go to **File > Publish to the web**.
+Go to **TAGS > Add Summary Sheet** and **TAGS > Add Dashboard Sheet**. Two new tabs should appear in your Google spreadsheet. When you change the Sheet Calculation setting from Off to **On**, you will some interesting data about your archive, like Top Tweeters, Tweets with the most RTs (retweets), and time plots of Twitter activity. What can these views tell you about your data? 
+
+Hawksey has created two interface tools to interact with the Twitter data you collect: TAGSExplorer and TAGS Archive. You can click on them from either your Summary or Dashboard tab. ***Note***: You need to make your spreadsheet public on the web in order for this to work. Go to **File > Share > Publish to web**.
 
 ![TAGSExplorer and TAGS Archive][4]
 
@@ -331,8 +334,8 @@ oldqueens_tweets <- search_tweets(
 )
 
 ## search using multiple queries
-pandemic_tweets <- search_tweets2(
-  c("\"pandemic university\"", "#covidcampus OR #covidcollege OR #coviduni OR #pandemicU"), 
+panic_tweets <- search_tweets2(
+  c("\"moral panic\"", "#crt OR #criticalracetheory"),
   n = 500, token = token
 )
 
@@ -350,13 +353,13 @@ joe_tml %>%
   ts_plot("weeks")
 ```
 
-```{r pandemic_tweets, echo=FALSE}
+```{r panic_tweets, echo=FALSE}
 
-ts_plot(pandemic_tweets, "3 hours") +
+ts_plot(panic_tweets, "hours") +
   ggplot2::theme_bw() +
   ggplot2::labs(x="", y="", 
-                title = "Frequency of tweets about COVID19 and higher education",
-                subtitle = "Tweet counts aggregated using three-hour intervals")
+                title = "Frequency of tweets about Critical Race Theory and other moral panics ",
+                subtitle = "Tweet counts aggregated using intervals of an hour")
 ```
 
 
@@ -376,9 +379,9 @@ my_archive <- search_tweets(
 
 The subject of manipulation and analysis will be addressed in the second part of this workshop. But to leave you with a taste, this code block counts the hashtag entities present in the `library_tweets` object and sorts them in descending order by frequency, and visualizes the top ten as a bar graph. 
 
-```{r pandemic_hashtags, echo=TRUE}
+```{r panic_hashtags, echo=TRUE}
 
-select(pandemic_tweets, hashtags) %>% 
+select(panic_tweets, hashtags) %>% 
   unnest(cols = c(hashtags)) %>% 
   mutate(hashtags = tolower(hashtags)) %>% 
   count(hashtags, sort=TRUE) %>% 
